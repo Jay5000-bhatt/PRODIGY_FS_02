@@ -1,5 +1,3 @@
-// models/employeeModel.js
-
 const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema(
@@ -26,7 +24,7 @@ const employeeSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 

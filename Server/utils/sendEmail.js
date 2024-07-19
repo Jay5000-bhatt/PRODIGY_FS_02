@@ -1,33 +1,28 @@
 const nodemailer = require("nodemailer");
 
-// Function to send email
 const sendEmail = async ({ email, subject, text }) => {
-  // Log the email details
   console.log("Sending email to:", to);
   console.log("Subject:", subject);
   console.log("Text:", text);
 
-  // Create a transporter using SMTP transport
   let transporter = nodemailer.createTransport({
     service: "Gmail",
     auth: {
-      user: process.env.EMAIL_USER, // Your Gmail username
-      pass: process.env.EMAIL_PASS, // Your Gmail password
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   console.log(EMAIL_USER);
   console.log(EMAIL_PASS);
 
-  // Setup email data
   let mailOptions = {
-    from: `"Admin Registration" <${process.env.EMAIL_USER}>`, // Sender address
-    to: email, // Recipient's email address
-    subject: subject, // Subject line
-    text: text, // Plain text body
+    from: `"Admin Registration" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: subject,
+    text: text,
   };
 
-  // Send email
   try {
     let info = await transporter.sendMail(mailOptions);
     console.log("Message sent: %s", info.messageId);

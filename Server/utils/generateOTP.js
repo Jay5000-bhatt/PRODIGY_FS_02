@@ -1,6 +1,3 @@
-// utils/generateOTP.js
-
-// Function to generate a random OTP
 const generateOTP = () => {
   const digits = "0123456789";
   let OTP = "";

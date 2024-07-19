@@ -5,9 +5,8 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
-const otpStore = {}; // Temporary in-memory store for OTPs
+const otpStore = {};
 
-// Function to send email
 const sendEmail = async ({ to, subject, text }) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -33,7 +32,6 @@ const sendEmail = async ({ to, subject, text }) => {
   }
 };
 
-// Function to generate OTP
 const generateOtp = () => {
   return crypto.randomInt(100000, 999999).toString();
 };
@@ -86,9 +84,9 @@ const registerAdmin = asyncHandler(async (req, res) => {
 const authAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Login request received"); // Debug
-  console.log("Email:", email); // Debug
-  console.log("Password:", password); // Debug
+  console.log("Login request received");
+  console.log("Email:", email);
+  console.log("Password:", password);
 
   if (!email || !password) {
     res.status(400);
@@ -98,7 +96,7 @@ const authAdmin = asyncHandler(async (req, res) => {
   const admin = await Admin.findOne({ email });
 
   if (admin) {
-    console.log("Admin found:", admin); // Debug
+    console.log("Admin found:", admin);
 
     const isPasswordMatch = await bcrypt.compare(password, admin.password);
 

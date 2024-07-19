@@ -1,5 +1,3 @@
-// controllers/employeeController.js
-
 const Employee = require("../models/employeeModel");
 
 // @desc    Get all employees
@@ -30,7 +28,6 @@ const createEmployee = async (req, res) => {
   const { name, email, position, department, salary } = req.body;
 
   try {
-    // Check if employee with the same email already exists
     const existingEmployee = await Employee.findOne({ email });
     if (existingEmployee) {
       return res
@@ -38,7 +35,6 @@ const createEmployee = async (req, res) => {
         .json({ message: "Employee with this email already exists" });
     }
 
-    // Create new employee instance
     const newEmployee = new Employee({
       name,
       email,
@@ -47,7 +43,6 @@ const createEmployee = async (req, res) => {
       salary,
     });
 
-    // Save employee to database
     const createdEmployee = await newEmployee.save();
 
     res.status(201).json(createdEmployee);
@@ -64,18 +59,15 @@ const updateEmployee = async (req, res) => {
   const { name, email, position, department, salary } = req.body;
 
   try {
-    // Check if employee exists
     const employee = await Employee.findById(req.params.id);
 
     if (employee) {
-      // Update employee fields
       employee.name = name;
       employee.email = email;
       employee.position = position;
       employee.department = department;
       employee.salary = salary;
 
-      // Save updated employee
       const updatedEmployee = await employee.save();
       res.json(updatedEmployee);
     } else {
