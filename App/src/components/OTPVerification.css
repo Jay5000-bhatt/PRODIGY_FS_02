@@ -8,6 +8,22 @@
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.input-field {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.Button{
+  margin-top: 15px;
+}
+
+form.slider{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
 
 .form1 {
   display: flex;

@@ -4,7 +4,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #5da2de, #ff9747);
+  background: linear-gradient(to right, #101abf, #ff6f00);
 }
 
 h2 {

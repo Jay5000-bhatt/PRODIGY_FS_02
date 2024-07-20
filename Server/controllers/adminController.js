@@ -124,25 +124,52 @@ const authAdmin = asyncHandler(async (req, res) => {
 const verifyAdmin = asyncHandler(async (req, res) => {
   const { email, otp } = req.body;
 
+  console.log("Received OTP type:", typeof otp);
+  console.log("Received OTP value:", otp);
+
+  // Check if the email exists in the database
   const admin = await Admin.findOne({ email });
 
-  if (admin && otpStore[email] && otp === otpStore[email]) {
-    admin.isVerified = true;
-    await admin.save();
-    delete otpStore[email]; // Remove OTP after verification
-
-    res.json({
-      _id: admin._id,
-      name: admin.name,
-      email: admin.email,
-      isVerified: admin.isVerified,
-      token: generateToken(admin._id),
-    });
-  } else {
-    res.status(401);
-    throw new Error("Invalid OTP");
+  if (!admin) {
+    res.status(404);
+    throw new Error("Admin not found");
   }
+
+  // Check if OTP is available in otpStore
+  const storedOtp = otpStore[email];
+
+  console.log("Stored OTP type:", typeof storedOtp);
+  console.log("Stored OTP value:", storedOtp);
+
+  if (!storedOtp) {
+    res.status(400);
+    throw new Error("OTP not found or expired");
+  }
+
+  // Compare OTPs as strings
+  if (otp !== storedOtp) {
+    res.status(400);
+    throw new Error("Incorrect OTP");
+  }
+
+  // Update admin verification status
+  admin.isVerified = true;
+  await admin.save();
+
+  // Remove OTP after successful verification
+  delete otpStore[email];
+
+  res.json({
+    _id: admin._id,
+    name: admin.name,
+    email: admin.email,
+    isVerified: admin.isVerified,
+    token: generateToken(admin._id),
+  });
 });
+
+
+
 
 module.exports = {
   registerAdmin,
